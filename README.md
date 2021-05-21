@@ -1,6 +1,6 @@
 # SSOP 
 <b> --- Developers </b>
-  Anıl Berk Güreli
+  Anıl Berkk Güreli
   Emir Özçopur
   Berkin Öztekin
   Mustafa Ege Şener
