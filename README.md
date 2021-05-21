@@ -1,7 +1,7 @@
 # SSOP 
 <b> --- Developers </b>
-  Anıl Berk Güreli
+ <p> Anıl Berk Güreli
   Emir Özçopur
   Berkin Öztekin
-  Mustafa Ege Şener
+  Mustafa Ege Şener </p>
 
