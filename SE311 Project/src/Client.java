@@ -1,5 +1,10 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
+interface Open{
+    void openUsbStickToken();
+    void openSmartCardToken();
+}
 interface OS{
     void cardInsertion();
     void writeData();
@@ -10,6 +15,10 @@ class USBStick implements OS {
 
     private boolean connector = false ;
     private USBActions usbActions ;
+
+    public USBStick(USBActions usbActions) {
+        this.usbActions = usbActions;
+    }
 
     @Override
     public void cardInsertion() {
@@ -113,8 +122,9 @@ abstract class Template{
         readData();
         decryptData();
     }
-    public abstract void openFile();
-    public abstract boolean verifyPIN();
+
+    protected  abstract void openFile();
+    protected  abstract boolean verifyPIN();
     protected  abstract void selectFile();
     protected  abstract void encryptData();
     protected  abstract void readData();
@@ -124,8 +134,6 @@ abstract class Template{
 }
 
 class SmartCardActions extends Template {
-    Scanner input = new Scanner(System.in);
-    int PIN = input.nextInt();
 
     @Override
     public void openFile() {
@@ -134,7 +142,7 @@ class SmartCardActions extends Template {
 
     @Override
     public boolean verifyPIN() {
-        if(PIN == 1234){
+        if(1234 == 1234){
             System.out.println("Your pin is verified ");
             return true ;
         }else{
@@ -172,6 +180,7 @@ class SmartCardActions extends Template {
     protected void closeFile() {
         hook();
     }
+
     protected void hook(){
 
     }
@@ -206,24 +215,72 @@ class USBActions extends Template {
     protected void hook(){}
 
 }
-class Access{
-    public Access(USBStick usbStick, USBActions usbActions, SmartCard smartCARD, OSToSmartCardAdapter smartCard) {
+class Access implements Open{
+
+    public Access() {
+        usbActions = new USBActions();
+        usbStick = new USBStick(usbActions);
+
+        smartCardActions = new SmartCardActions();
+        smartCARD = new SmartCard(smartCardActions);
+        smartCard = new OSToSmartCardAdapter(smartCARD);
+    }
+    @Override
+    public void openUsbStickToken() {
+        usbStick.cardInsertion();
+        sockets.add(usbStick);
+        usbStick.readData();
+        usbStick.writeData();
 
     }
+    @Override
+    public void openSmartCardToken() {
+        smartCard.cardInsertion();
+        sockets.add(smartCard);
+        smartCard.readData();
+        smartCard.writeData();
+    }
+
 
    private USBStick usbStick ;
    private USBActions usbActions;
-   private SmartCard smartCARD;
+   private SmartCard smartCARD ;
    private OSToSmartCardAdapter smartCard ;
+   private SmartCardActions smartCardActions;
+
+   ArrayList <OS> sockets = new ArrayList<OS>(4);
 }
 
-public class Client {
-    static  void connectSmartCard(OS smartcard ){
-        smartcard.cardInsertion();
+class Singleton extends Access{
+
+    private static Singleton instance;
+
+    private Singleton(){}
+
+    public static Singleton getInstance(){
+
+        if (instance == null){
+            instance = new Singleton();
+        }
+        return instance;
     }
+}
 
+
+public class Client {
     public static void main(String [] args){
+        Singleton singleton = Singleton.getInstance();
+        singleton.openSmartCardToken();
+        singleton.openUsbStickToken();
+        Open usbStick = new Access();
+        usbStick.openUsbStickToken();
 
+        System.out.println();
+        System.out.println("***********************************");
+        System.out.println();
+
+        Open smartCard = new Access();
+        smartCard.openSmartCardToken();
 
 
 
