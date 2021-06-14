@@ -171,11 +171,12 @@ class SmartCardActions extends Template {
     }
 
     protected void decryptData() {
-        if(verifyPIN())
-            System.out.println("Decrypting...");
-        else{
-            System.out.println("....");
-        }
+        System.out.println("Decrypting....");
+//        if(verifyPIN())
+//            System.out.println("Decrypting...");
+//        else{
+//            System.out.println("....");
+//        }
     }
 
     @Override
@@ -184,7 +185,7 @@ class SmartCardActions extends Template {
     }
 
     protected void hook(){
-
+        //Boş dönmesi için
     }
 }
 
