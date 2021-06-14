@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-<<<<<<< HEAD
-      <module fileurl="file://$PROJECT_DIR$/SE311 Project/SE311 Project.iml" filepath="$PROJECT_DIR$/SE311 Project/SE311 Project.iml" />
-=======
-      <module fileurl="file://$PROJECT_DIR$/SSOP2.iml" filepath="$PROJECT_DIR$/SSOP2.iml" />
->>>>>>> f290af72811ccaad822aa728b6ab68ef4af6a749
+      <module fileurl="file://$PROJECT_DIR$/SSOP5.iml" filepath="$PROJECT_DIR$/SSOP5.iml" />
     </modules>
   </component>
 </project>
