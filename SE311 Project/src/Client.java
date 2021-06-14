@@ -65,7 +65,8 @@ class SmartCard {
 
     public void writeData() {
         if(connector){
-            System.out.println("Data is writing...");
+            System.out.println("Writing proces is working for Smart Card");
+            System.out.println("---------------------------------");
             System.out.println("Your data is wrote on your Smart Card");
             smartCardActions.WriteActions();
         }else {
@@ -75,7 +76,8 @@ class SmartCard {
 
     public void readData() {
         if(connector){
-            System.out.println("Data is reading...");
+            System.out.println("Reading process is working for Smart Card");
+            System.out.println("----------------------------------");
             smartCardActions.ReadActions();
         }else {
             System.out.println("Please connect your smart card");
@@ -109,20 +111,22 @@ class OSToSmartCardAdapter implements OS{
 abstract class Template{
 
     public void ReadActions(){
-       // verifyPIN();
-      //  openFile();
+//        verifyPIN();
+//        openFile();
         selectFile();
         readData();
-        closeFile();
         decryptData();
+        closeFile();
     }
     public void WriteActions(){
-      // openFile();
-       // verifyPIN();
+//         openFile();
+//         verifyPIN();
         selectFile();
         encryptData();
-        readData();
-        decryptData();
+        writeData();
+      //  decryptData();
+
+
     }
 
   //  protected  abstract void openFile();
@@ -130,6 +134,7 @@ abstract class Template{
     protected  abstract void selectFile();
     protected  abstract void encryptData();
     protected  abstract void readData();
+    protected abstract void writeData();
     protected  abstract void decryptData();
     protected  abstract void closeFile();
 
@@ -160,15 +165,22 @@ class SmartCardActions extends Template {
         }
     }
     protected void encryptData() {
-        if(verifyPIN() )
-            System.out.println("Data is encrypted");
-        else {
-            System.out.println("Data couldn't select");
-        }
+        System.out.println("Data is encrypted");
+//        if(verifyPIN() )
+//            System.out.println("Data is encrypted");
+//        else {
+//            System.out.println("Data couldn't select");
+//        }
     }
     protected void readData() {
-       hook();
+        System.out.println("Data is reading***");
     }
+
+    protected void writeData(){
+        System.out.println("Data is writing***");
+    }
+
+
 
     protected void decryptData() {
         System.out.println("Decrypting....");
@@ -186,6 +198,7 @@ class SmartCardActions extends Template {
 
     protected void hook(){
         //Boş dönmesi için
+        System.out.println();
     }
 }
 
@@ -207,6 +220,9 @@ class USBActions extends Template {
     }
     protected void readData() {
        hook();
+    }
+    protected void writeData(){
+        hook();
     }
     protected void decryptData() {
         System.out.println("Decrypting...");
