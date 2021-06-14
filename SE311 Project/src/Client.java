@@ -61,6 +61,8 @@ class SmartCard {
     public void cardInsertion() {
         connector = true ;
         System.out.println("Smart Card is connected");
+        System.out.println("------------------------");
+        System.out.println();
     }
 
     public void writeData() {
@@ -132,10 +134,14 @@ abstract class Template{
   //  protected  abstract void openFile();
     protected  abstract boolean verifyPIN();
     protected  abstract void selectFile();
-    protected  abstract void encryptData();
+    protected  final void encryptData(){
+        System.out.println("Encrypting...");
+    }
     protected  abstract void readData();
     protected abstract void writeData();
-    protected  abstract void decryptData();
+    protected  final void decryptData(){
+        System.out.println("Decrypting...");
+    }
     protected  abstract void closeFile();
 
 }
@@ -164,14 +170,14 @@ class SmartCardActions extends Template {
             System.out.println("File couldn't select");
         }
     }
-    protected void encryptData() {
-        System.out.println("Data is encrypted");
-//        if(verifyPIN() )
-//            System.out.println("Data is encrypted");
-//        else {
-//            System.out.println("Data couldn't select");
-//        }
-    }
+//    protected void encryptData() {
+//
+////        if(verifyPIN() )
+////            System.out.println("Data is encrypted");
+////        else {
+////            System.out.println("Data couldn't select");
+////        }
+    //}
     protected void readData() {
         System.out.println("Data is reading***");
     }
@@ -182,14 +188,14 @@ class SmartCardActions extends Template {
 
 
 
-    protected void decryptData() {
-        System.out.println("Decrypting....");
-//        if(verifyPIN())
-//            System.out.println("Decrypting...");
-//        else{
-//            System.out.println("....");
-//        }
-    }
+//    protected void decryptData() {
+//        System.out.println("Decrypting....");
+////        if(verifyPIN())
+////            System.out.println("Decrypting...");
+////        else{
+////            System.out.println("....");
+////        }
+//    }
 
     @Override
     protected void closeFile() {
@@ -215,18 +221,18 @@ class USBActions extends Template {
     protected void selectFile() {
         System.out.println("File is selected...");
     }
-    protected void encryptData() {
-        System.out.println("Data is encrypted");
-    }
+//    protected void encryptData() {
+//        System.out.println("Data is encrypted");
+//    }
     protected void readData() {
        hook();
     }
     protected void writeData(){
         hook();
     }
-    protected void decryptData() {
-        System.out.println("Decrypting...");
-    }
+//    protected void decryptData() {
+//        System.out.println("Decrypting...");
+//    }
     protected void closeFile() {
         System.out.println("File is closed");
     }
@@ -291,7 +297,11 @@ class Singleton extends Access{
 public class Client {
     public static void main(String [] args){
         Singleton singleton = Singleton.getInstance();
-        singleton.openSmartCardToken(); //Singletondan aldığımız objeyi çağırıyoruz
+       // singleton.openSmartCardToken(); //Singletondan aldığımız  smart card objeyi çağırıyoruz
+        singleton.openUsbStickToken(); //Singletondan aldığımız usb stick objeyi çağırıyoruz
+
+
+
 
 //        singleton.openUsbStickToken();
 //        Open usbStick = new Access();
