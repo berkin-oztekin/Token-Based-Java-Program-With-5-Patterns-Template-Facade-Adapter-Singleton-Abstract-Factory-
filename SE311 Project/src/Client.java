@@ -328,6 +328,8 @@ public class Client {
             singleton.openUsbStickToken(); //Singletondan aldığımız usb stick objeyi çağırıyoruz
 
         }
+        else
+            System.out.println("You entered an invalid value");
 
 
 
