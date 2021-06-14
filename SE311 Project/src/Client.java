@@ -20,6 +20,13 @@ class USBStick implements OS {
         this.usbActions = usbActions;
     }
 
+    public void openFile(){
+        System.out.println("File has been opened");
+    }
+
+    public void closeFile() {
+        System.out.println("File has been closed");
+    }
     @Override
     public void cardInsertion() {
         connector = true  ;
@@ -118,7 +125,7 @@ abstract class Template{
         selectFile();
         readData();
         decryptData();
-        closeFile();
+        //closeFile();
     }
     public void WriteActions(){
 //         openFile();
@@ -132,7 +139,7 @@ abstract class Template{
     }
 
   //  protected  abstract void openFile();
-    protected  abstract boolean verifyPIN();
+  //  protected  abstract boolean verifyPIN();
     protected  abstract void selectFile();
     protected  final void encryptData(){
         System.out.println("Encrypting...");
@@ -153,7 +160,7 @@ class SmartCardActions extends Template {
 //        hook();
 //    }
 
-    @Override
+
     public boolean verifyPIN() {
         if(1234 == 1234){
             System.out.println("Your pin is verified ");
@@ -199,25 +206,25 @@ class SmartCardActions extends Template {
 
     @Override
     protected void closeFile() {
-        hook();
+//        hook();
     }
 
-    protected void hook(){
-        //Boş dönmesi için
-        System.out.println();
-    }
+//    protected void hook(){
+//        //Boş dönmesi için
+//        System.out.println();
+//    }
 }
 
 class USBActions extends Template {
 
-  //  @Override
-    public void openFile() {
-        System.out.println("File is opened");
-    }
-    public boolean verifyPIN(){
-        hook();
-        return true ;
-    }
+//  //  @Override
+//    public void openFile() {
+//        System.out.println("File is opened");
+//    }
+//    public boolean verifyPIN(){
+//        hook();
+//        return true ;
+//    }
     protected void selectFile() {
         System.out.println("File is selected...");
     }
@@ -255,14 +262,17 @@ class Access implements Open{
     @Override
     public void openUsbStickToken() {
         usbStick.cardInsertion();
+        usbStick.openFile();
         sockets.add(usbStick);
         usbStick.readData();
         usbStick.writeData();
+        usbStick.closeFile();
 
     }
     @Override
     public void openSmartCardToken() {
         smartCard.cardInsertion();
+        smartCardActions.verifyPIN();
         sockets.add(smartCard);
         smartCard.readData();
         smartCard.writeData();
@@ -297,8 +307,27 @@ class Singleton extends Access{
 public class Client {
     public static void main(String [] args){
         Singleton singleton = Singleton.getInstance();
-       // singleton.openSmartCardToken(); //Singletondan aldığımız  smart card objeyi çağırıyoruz
-        singleton.openUsbStickToken(); //Singletondan aldığımız usb stick objeyi çağırıyoruz
+
+
+        Scanner scan = new Scanner(System.in); //Scanner for user input
+
+        System.out.println("Please choose your insertion");
+        System.out.println("1 Smart Card");
+        System.out.println("2 USB Stick");
+        System.out.println();
+
+        int selection ;
+        System.out.println("What is your selection?");
+        selection = scan.nextInt();
+
+        if (selection == 1 ){
+            singleton.openSmartCardToken(); //Singletondan aldığımız  smart card objeyi çağırıyoruz
+
+        }
+        else if (selection == 2){
+            singleton.openUsbStickToken(); //Singletondan aldığımız usb stick objeyi çağırıyoruz
+
+        }
 
 
 
