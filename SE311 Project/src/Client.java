@@ -7,8 +7,8 @@ interface Open{
 }
 interface OS{
     void cardInsertion();
-    void writeData();
-    void readData();
+    void writingProcess();
+    void readingProcess();
 }
 
 class USBStick implements OS {
@@ -34,7 +34,7 @@ class USBStick implements OS {
     }
 
     @Override
-    public void writeData() {
+    public void writingProcess() {
         if(connector){
             System.out.println("Data is writing...");
             System.out.println("Your data is wrote on your USB Card");
@@ -45,10 +45,10 @@ class USBStick implements OS {
     }
 
     @Override
-    public void readData() {
+    public void readingProcess() {
         if(connector){
             System.out.println("Data is reading...");
-            System.out.println("Your data is wrote on your USB Card");
+            System.out.println("Your data is read on your USB Card");
             usbActions.ReadActions();
         }else{
             System.out.println("Please connect your USB Stick");
@@ -72,7 +72,7 @@ class SmartCard {
         System.out.println();
     }
 
-    public void writeData() {
+    public void smartCardWriting() {
         if(connector){
             System.out.println("Writing proces is working for Smart Card");
             System.out.println("---------------------------------");
@@ -83,7 +83,7 @@ class SmartCard {
         }
     }
 
-    public void readData() {
+    public void smartCardReading() {
         if(connector){
             System.out.println("Reading process is working for Smart Card");
             System.out.println("----------------------------------");
@@ -106,12 +106,12 @@ class OSToSmartCardAdapter implements OS{
         smartCard.cardInsertion();
     }
     @Override
-    public void writeData() {
-        smartCard.writeData();
+    public void writingProcess() {
+        smartCard.smartCardWriting();
     }
     @Override
-    public void readData() {
-        smartCard.readData();
+    public void readingProcess() {
+        smartCard.smartCardReading();
     }
 }
 
@@ -264,8 +264,8 @@ class Access implements Open{
         usbStick.cardInsertion();
         usbStick.openFile();
         sockets.add(usbStick);
-        usbStick.readData();
-        usbStick.writeData();
+        usbStick.readingProcess();
+        usbStick.writingProcess();
         usbStick.closeFile();
 
     }
@@ -274,8 +274,8 @@ class Access implements Open{
         smartCard.cardInsertion();
         smartCardActions.verifyPIN();
         sockets.add(smartCard);
-        smartCard.readData();
-        smartCard.writeData();
+        smartCard.readingProcess();
+        smartCard.writingProcess();
     }
 
 
