@@ -13,7 +13,7 @@ interface OS{
 
 class USBStick implements OS {
 
-    private boolean connector = false ;
+    private boolean connector = false ; //connectionun bağlı veya değil olduğunu tespit için
     private USBActions usbActions ;
 
     public USBStick(USBActions usbActions) {
@@ -104,26 +104,28 @@ class OSToSmartCardAdapter implements OS{
     }
 }
 
+//Template pattern starts below
+
 abstract class Template{
 
     public void ReadActions(){
-        verifyPIN();
-        openFile();
+       // verifyPIN();
+      //  openFile();
         selectFile();
         readData();
         closeFile();
         decryptData();
     }
     public void WriteActions(){
-        openFile();
-        verifyPIN();
+      // openFile();
+       // verifyPIN();
         selectFile();
         encryptData();
         readData();
         decryptData();
     }
 
-    protected  abstract void openFile();
+  //  protected  abstract void openFile();
     protected  abstract boolean verifyPIN();
     protected  abstract void selectFile();
     protected  abstract void encryptData();
@@ -135,10 +137,10 @@ abstract class Template{
 
 class SmartCardActions extends Template {
 
-    @Override
-    public void openFile() {
-        hook();
-    }
+//    @Override
+//    public void openFile() {
+//        hook();
+//    }
 
     @Override
     public boolean verifyPIN() {
@@ -188,7 +190,7 @@ class SmartCardActions extends Template {
 
 class USBActions extends Template {
 
-    @Override
+  //  @Override
     public void openFile() {
         System.out.println("File is opened");
     }
@@ -216,6 +218,8 @@ class USBActions extends Template {
 
 }
 class Access implements Open{
+
+    // Hem usb hem de smart cardın çalıştırıldığı yer
 
     public Access() {
         usbActions = new USBActions();
@@ -270,17 +274,18 @@ class Singleton extends Access{
 public class Client {
     public static void main(String [] args){
         Singleton singleton = Singleton.getInstance();
-        singleton.openSmartCardToken();
-        singleton.openUsbStickToken();
-        Open usbStick = new Access();
-        usbStick.openUsbStickToken();
+        singleton.openSmartCardToken(); //Singletondan aldığımız objeyi çağırıyoruz
 
-        System.out.println();
-        System.out.println("***********************************");
-        System.out.println();
-
-        Open smartCard = new Access();
-        smartCard.openSmartCardToken();
+//        singleton.openUsbStickToken();
+//        Open usbStick = new Access();
+//        usbStick.openUsbStickToken();
+//
+//        System.out.println();
+//        System.out.println("***********************************");
+//        System.out.println();
+//
+//        Open smartCard = new Access();
+//        smartCard.openSmartCardToken();
 
 
 
